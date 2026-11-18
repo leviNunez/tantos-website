@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tantos · Anotador de dominó</title>
+<meta name="description" content="Anota tus partidas de dominó. Olvídate del papel y el lápiz: Tantos lleva la cuenta por ti. Para iPhone y Android.">
+<meta name="theme-color" content="#0A6ED1">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="canonical" href="https://levinunez.github.io/tantos-website/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://levinunez.github.io/tantos-website/">
+<meta property="og:site_name" content="Tantos">
+<meta property="og:title" content="Tantos · Anotador de dominó">
+<meta property="og:description" content="Olvídate del papel y el lápiz. Tantos lleva la cuenta por ti.">
+<meta property="og:image" content="https://levinunez.github.io/tantos-website/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #0068BA;
+    --red: #C00F0F;
+    --gold: #9A5A00;
+    --green: #137845;
+    --ink: #1C1B1F;
+    --ink-2: #49454F;
+    --line: #E3E2E6;
+    --bg: #F2F2F7;
+    --card: #FFFFFF;
+    --grad: linear-gradient(135deg, #0A6ED1 0%, #C00F0F 100%);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--card);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--blue); }
+  .wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  :focus-visible { outline: 3px solid #FFC94D; outline-offset: 3px; border-radius: 8px; }
+
+  /* Header */
+  .top { position: absolute; top: 0; left: 0; right: 0; z-index: 10; }
+  .top .wrap { display: flex; align-items: center; gap: 16px; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; font-size: 22px; letter-spacing: -0.3px; }
+  .brand img { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.3); }
+  .nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .nav a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 12px; border-radius: 999px; }
+  .nav a:hover { background: rgba(255,255,255,0.12); }
+  .lang {
+    display: inline-flex; border-radius: 999px; padding: 3px; background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.28); margin-left: 6px;
+  }
+  .lang button {
+    font: inherit; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); background: transparent;
+    border: 0; border-radius: 999px; padding: 6px 11px; cursor: pointer; min-height: 32px;
+  }
+  .lang button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+
+  /* Hero */
+  .hero { background: var(--grad); color: #fff; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: center; padding-top: 120px; padding-bottom: 72px; min-height: 720px; }
+  .hero h1 { margin: 0; font-size: clamp(44px, 6vw, 72px); line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; }
+  .hero p.sub { margin: 20px 0 0; font-size: clamp(18px, 2vw, 22px); line-height: 1.45; color: rgba(255,255,255,0.92); max-width: 30ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 22px; border-radius: 999px;
+    font-weight: 700; font-size: 16px; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+  .btn-light { background: #fff; color: var(--ink); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+  .btn-ghost { color: #fff; border: 1.5px solid rgba(255,255,255,0.7); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn[aria-disabled="true"] { opacity: 0.75; cursor: default; pointer-events: none; }
+  .hero .note { margin: 16px 0 0; font-size: 14px; color: rgba(255,255,255,0.78); }
+
+  /* Phones */
+  .phone {
+    --w: 300px; position: relative; width: var(--w); padding: calc(var(--w) * 0.029);
+    border-radius: calc(var(--w) * 0.165); background: #0E0E10;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.14), 0 30px 70px rgba(0,0,0,0.38);
+  }
+  .phone img { width: 100%; height: auto; border-radius: calc(var(--w) * 0.137); background: var(--bg); }
+  .phone::after {
+    content: ""; position: absolute; left: 50%; transform: translateX(-50%);
+    top: calc(var(--w) * 0.055); width: calc(var(--w) * 0.30); height: calc(var(--w) * 0.088);
+    border-radius: 999px; background: #000;
+  }
+  .duo { position: relative; height: 650px; }
+  .duo .phone { position: absolute; }
+  .duo .front { --w: 300px; left: 4%; top: 0; z-index: 2; }
+  .duo .back { --w: 262px; left: 46%; top: 70px; z-index: 1; }
+
+  /* Sections */
+  section { padding: 96px 0; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 10px; }
+  h2 { margin: 0; font-size: clamp(32px, 4vw, 44px); line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; }
+  .lead { margin: 14px 0 0; font-size: 18px; color: var(--ink-2); max-width: 52ch; }
+
+  .features { background: var(--bg); }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 44px; }
+  .card { background: var(--card); border-radius: 24px; padding: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; }
+  .icon svg { width: 26px; height: 26px; }
+  .i-blue { background: #E3EEF8; color: var(--blue); }
+  .i-red { background: #F8E3E3; color: var(--red); }
+  .i-gold { background: #F6ECDD; color: var(--gold); }
+  .i-green { background: #E1F0E7; color: var(--green); }
+  .card h3 { margin: 18px 0 6px; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+  .card p { margin: 0; color: var(--ink-2); font-size: 16px; }
+
+  .spot .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .spot .shot { display: flex; justify-content: center; padding: 40px 0; border-radius: 32px; background: var(--grad); overflow: hidden; }
+  .spot .shot .phone { --w: 270px; }
+
+  .pro { background: var(--bg); }
+  .pro-card { background: var(--grad); color: #fff; border-radius: 32px; padding: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .pro-card .eyebrow { color: rgba(255,255,255,0.8); }
+  .pro-card .lead { color: rgba(255,255,255,0.9); }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .checks li { display: flex; gap: 14px; align-items: flex-start; font-size: 18px; font-weight: 600; background: rgba(255,255,255,0.12); border-radius: 18px; padding: 16px 18px; }
+  .checks svg { width: 24px; height: 24px; flex-shrink: 0; margin-top: 1px; }
+
+  .support .wrap { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; }
+  .mail { margin-top: 28px; }
+  .btn-dark { background: var(--ink); color: #fff; }
+  .mail small { display: block; margin-top: 12px; color: var(--ink-2); font-size: 15px; }
+  .faq h3 { margin: 0 0 14px; font-size: 20px; font-weight: 700; }
+  details { border-top: 1px solid var(--line); }
+  details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary {
+    list-style: none; cursor: pointer; padding: 18px 40px 18px 0; position: relative;
+    font-weight: 600; font-size: 17px; min-height: 44px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: ""; position: absolute; right: 6px; top: 50%; width: 10px; height: 10px; margin-top: -7px;
+    border-right: 2px solid var(--ink-2); border-bottom: 2px solid var(--ink-2); transform: rotate(45deg); transition: transform .2s ease;
+  }
+  details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+  details p { margin: 0 0 18px; color: var(--ink-2); font-size: 16px; }
+
+  footer { background: var(--ink); color: rgba(255,255,255,0.75); padding: 40px 0; font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
+  footer .brand { font-size: 18px; }
+  footer .brand img { width: 32px; height: 32px; border-radius: 8px; }
+  footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  footer a { color: #fff; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer .legal { margin-left: auto; }
+
+  @media (max-width: 960px) {
+    .hero .wrap { grid-template-columns: 1fr; padding-top: 108px; min-height: 0; text-align: left; }
+    .duo { height: 560px; max-width: 460px; width: 100%; margin: 8px auto 0; }
+    .duo .front { --w: 250px; left: 2%; }
+    .duo .back { --w: 218px; left: 48%; top: 60px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .spot .wrap, .support .wrap, .pro-card { grid-template-columns: 1fr; }
+    .pro-card { padding: 36px 28px; }
+    .spot .shot { order: 2; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .nav a { display: none; }
+    section { padding: 64px 0; }
+    .grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
+    .card { padding: 22px; }
+    .duo { height: 470px; }
+    .duo .front { --w: 210px; left: 0; }
+    .duo .back { --w: 184px; left: auto; right: 0; top: 50px; }
+    .btn { width: 100%; justify-content: center; }
+    .spot .shot .phone { --w: 230px; }
+    footer .legal { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="img/logo.svg" alt="" width="40" height="40">Tantos</a>
+    <nav class="nav" aria-label="Principal" data-i18n-aria="nav.label">
+      <a href="#funciones" data-i18n="nav.features">Funciones</a>
+      <a href="#pro" data-i18n="nav.pro">Pro</a>
+      <a href="#soporte" data-i18n="nav.support">Soporte</a>
+      <div class="lang" role="group" aria-label="Idioma" data-i18n-aria="lang.label">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <h1 data-i18n="hero.title">Anota tus partidas de dominó</h1>
+        <p class="sub" data-i18n="hero.sub">Olvídate del papel y el lápiz. Tantos lleva la cuenta por ti.</p>
+        <div class="cta" id="descargar">
+          <a class="btn btn-light" data-link="appStore" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"></rect><path d="M11 18h2"></path></svg>
+            <span data-i18n="hero.ios">Descargar para iPhone</span>
+          </a>
+          <a class="btn btn-ghost" data-link="playStore" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"></rect><path d="M11 18h2"></path></svg>
+            <span data-i18n="hero.android">Descargar para Android</span>
+          </a>
+        </div>
+        <p class="note" data-i18n="hero.note">Gratis, en español y en inglés.</p>
+      </div>
+      <div class="duo" aria-hidden="true">
+        <div class="phone back"><img src="img/anotar.webp" alt="" width="720" height="1561"></div>
+        <div class="phone front"><img src="img/juego.webp" alt="" width="720" height="1561"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="features" id="funciones">
+    <div class="wrap">
+      <p class="eyebrow" data-i18n="features.eyebrow">Funciones</p>
+      <h2 data-i18n="features.title">Todo lo que necesita tu mesa</h2>
+      <p class="lead" data-i18n="features.lead">Hecho para jugar, no para pelear por la cuenta.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="icon i-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+          <h3 data-i18n="f1.t">En equipos o individual</h3>
+          <p data-i18n="f1.d">Juega en parejas o cada quien por su cuenta, hasta 4 jugadores.</p>
+        </article>
+        <article class="card">
+          <div class="icon i-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg></div>
+          <h3 data-i18n="f2.t">Anota con la cámara</h3>
+          <p data-i18n="f2.d">Toma una foto de las fichas y Tantos cuenta los puntos por ti.</p>
+        </article>
+        <article class="card">
+          <div class="icon i-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg></div>
+          <h3 data-i18n="f3.t">Edita o borra puntos</h3>
+          <p data-i18n="f3.d">¿Te equivocaste? Toca un punto para corregirlo o borrarlo, y todos ven qué cambió.</p>
+        </article>
+        <article class="card">
+          <div class="icon i-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"></path><path d="M18 6h2"></path><circle cx="16" cy="6" r="2"></circle><path d="M4 12h2"></path><path d="M10 12h10"></path><circle cx="8" cy="12" r="2"></circle><path d="M4 18h10"></path><path d="M18 18h2"></path><circle cx="16" cy="18" r="2"></circle></svg></div>
+          <h3 data-i18n="f4.t">Reglas de la mesa</h3>
+          <p data-i18n="f4.d">Puntos rápidos, puntos extra y empates: juega como se juega en tu mesa.</p>
+        </article>
+        <article class="card">
+          <div class="icon i-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path><path d="M12 15v4"></path></svg></div>
+          <h3 data-i18n="f5.t">Marcador e historial</h3>
+          <p data-i18n="f5.d">Mira quién va ganando el juego y repasa cada partida.</p>
+        </article>
+        <article class="card">
+          <div class="icon i-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><path d="M14 14h3v3h-3z"></path><path d="M21 14v7h-4"></path><path d="M17 21h-3v-3"></path></svg></div>
+          <h3 data-i18n="f6.t">Comparte el juego</h3>
+          <p data-i18n="f6.d">¿Te tienes que ir? Pásale el juego a otra persona con un código QR.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="spot">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" data-i18n="spot.eyebrow">Marcador</p>
+        <h2 data-i18n="spot.title">Mira quién va ganando</h2>
+        <p class="lead" data-i18n="spot.text">Partidas ganadas, perdidas y puntos totales de cada equipo, y cada partida con su resultado y lo que duró.</p>
+      </div>
+      <div class="shot" aria-hidden="true">
+        <div class="phone"><img src="img/historial.webp" alt="" width="720" height="1561" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pro" id="pro">
+    <div class="wrap">
+      <div class="pro-card">
+        <div>
+          <p class="eyebrow">Tantos Pro</p>
+          <h2 data-i18n="pro.title">Juega sin anuncios</h2>
+          <p class="lead" data-i18n="pro.lead">Un extra opcional para las mesas que juegan todos los días.</p>
+        </div>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-i18n="pro.i1">Sin anuncios</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-i18n="pro.i2">El historial completo de todas tus partidas</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"></path></svg><span data-i18n="pro.i3">Reglas de la mesa avanzadas: edítalas y crea las tuyas</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="support" id="soporte">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow" data-i18n="support.eyebrow">Ayuda</p>
+        <h2 data-i18n="support.title">Soporte</h2>
+        <p class="lead" data-i18n="support.text">¿Tienes una pregunta, una idea o encontraste un error? Escríbenos y te respondemos lo antes posible.</p>
+        <div class="mail">
+          <a class="btn btn-dark" data-link="email" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 6l-10 7L2 6"></path></svg>
+            <span data-i18n="support.button">Escríbenos</span>
+          </a>
+          <small data-email-text></small>
+        </div>
+      </div>
+      <div class="faq">
+        <h3 data-i18n="faq.title">Preguntas frecuentes</h3>
+        <details>
+          <summary data-i18n="q1">¿Tantos es gratis?</summary>
+          <p data-i18n="a1">Sí. Puedes anotar todas las partidas que quieras gratis. Tantos Pro es opcional: quita los anuncios y suma funciones extra.</p>
+        </details>
+        <details>
+          <summary data-i18n="q2">¿Cómo anoto con la cámara?</summary>
+          <p data-i18n="a2">En Anotar puntos, toca el ícono de la cámara, toma una foto de las fichas y revisa el total antes de anotarlo.</p>
+        </details>
+        <details>
+          <summary data-i18n="q3">¿Cómo corrijo un punto?</summary>
+          <p data-i18n="a3">Toca el punto en la tabla del juego para corregirlo o borrarlo. El punto editado muestra su valor anterior.</p>
+        </details>
+        <details>
+          <summary data-i18n="q4">¿Cómo le paso el juego a otra persona?</summary>
+          <p data-i18n="a4">Desde el menú del juego, elige Compartir juego y la otra persona escanea el código QR con Tantos.</p>
+        </details>
+        <details>
+          <summary data-i18n="q5">Compré Tantos Pro y no lo veo activo</summary>
+          <p data-i18n="a5">Abre Tantos Pro y restaura tu compra con la misma cuenta de Apple o de Google con la que pagaste. Si sigue sin funcionar, escríbenos.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="img/logo.svg" alt="" width="32" height="32">Tantos</a>
+    <nav aria-label="Pie de página" data-i18n-aria="footer.label">
+      <a href="#soporte" data-i18n="nav.support">Soporte</a>
+      <a data-link="privacy" href="#" data-i18n="footer.privacy">Política de privacidad</a>
+      <a data-link="terms" href="#" data-i18n="footer.terms">Términos de uso</a>
+    </nav>
+    <span class="legal"><span data-i18n="footer.made">Hecho en República Dominicana.</span> © 2026 Levi Nunez Marte</span>
+  </div>
+</footer>
+
+<script>
+  // ─── Edit these values ───────────────────────────────────────────────
+  // Leave a store link empty ("") to show a "coming soon" button instead.
+  var CONFIG = {
+    appStore: "", // e.g. "https://apps.apple.com/app/id1234567890"
+    playStore: "https://play.google.com/store/apps/details?id=com.levilabs.tantos",
+    email: "soporte.tantosapp@gmail.com",
+    privacy: {
+      es: "https://doc-hosting.flycricket.io/tantos-privacidad/e0d2464e-7664-407e-9f7f-558519acd333/privacy",
+      en: "https://doc-hosting.flycricket.io/tantos-privacy-policy/fb551f0c-b071-4863-ae56-fe29d47f8ce5/privacy"
+    },
+    terms: {
+      es: "https://doc-hosting.flycricket.io/tantos-terminos/d8637b3e-00d5-4260-87e2-8ea1c6eba4cb/terms",
+      en: "https://doc-hosting.flycricket.io/tantos-terms-of-use/49dba046-bd78-43df-8a8d-d5b1ec798f03/terms"
+    }
+  };
+  // ─────────────────────────────────────────────────────────────────────
+
+  var TEXT = {
+    es: {
+      "meta.title": "Tantos · Anotador de dominó",
+      "meta.description": "Anota tus partidas de dominó. Olvídate del papel y el lápiz: Tantos lleva la cuenta por ti. Para iPhone y Android.",
+      "nav.label": "Principal", "lang.label": "Idioma", "footer.label": "Pie de página",
+      "nav.features": "Funciones", "nav.pro": "Pro", "nav.support": "Soporte",
+      "hero.title": "Anota tus partidas de dominó",
+      "hero.sub": "Olvídate del papel y el lápiz. Tantos lleva la cuenta por ti.",
+      "hero.ios": "Descargar para iPhone", "hero.android": "Descargar para Android",
+      "hero.iosSoon": "Pronto en iPhone", "hero.androidSoon": "Pronto en Android",
+      "hero.note": "Gratis, en español y en inglés.",
+      "features.eyebrow": "Funciones",
+      "features.title": "Todo lo que necesita tu mesa",
+      "features.lead": "Hecho para jugar, no para pelear por la cuenta.",
+      "f1.t": "En equipos o individual", "f1.d": "Juega en parejas o cada quien por su cuenta, hasta 4 jugadores.",
+      "f2.t": "Anota con la cámara", "f2.d": "Toma una foto de las fichas y Tantos cuenta los puntos por ti.",
+      "f3.t": "Edita o borra puntos", "f3.d": "¿Te equivocaste? Toca un punto para corregirlo o borrarlo, y todos ven qué cambió.",
+      "f4.t": "Reglas de la mesa", "f4.d": "Puntos rápidos, puntos extra y empates: juega como se juega en tu mesa.",
+      "f5.t": "Marcador e historial", "f5.d": "Mira quién va ganando el juego y repasa cada partida.",
+      "f6.t": "Comparte el juego", "f6.d": "¿Te tienes que ir? Pásale el juego a otra persona con un código QR.",
+      "spot.eyebrow": "Marcador", "spot.title": "Mira quién va ganando",
+      "spot.text": "Partidas ganadas, perdidas y puntos totales de cada equipo, y cada partida con su resultado y lo que duró.",
+      "pro.title": "Juega sin anuncios", "pro.lead": "Un extra opcional para las mesas que juegan todos los días.",
+      "pro.i1": "Sin anuncios", "pro.i2": "El historial completo de todas tus partidas",
+      "pro.i3": "Reglas de la mesa avanzadas: edítalas y crea las tuyas",
+      "support.eyebrow": "Ayuda", "support.title": "Soporte",
+      "support.text": "¿Tienes una pregunta, una idea o encontraste un error? Escríbenos y te respondemos lo antes posible.",
+      "support.button": "Escríbenos", "support.or": "O escribe a ",
+      "faq.title": "Preguntas frecuentes",
+      "q1": "¿Tantos es gratis?", "a1": "Sí. Puedes anotar todas las partidas que quieras gratis. Tantos Pro es opcional: quita los anuncios y suma funciones extra.",
+      "q2": "¿Cómo anoto con la cámara?", "a2": "En Anotar puntos, toca el ícono de la cámara, toma una foto de las fichas y revisa el total antes de anotarlo.",
+      "q3": "¿Cómo corrijo un punto?", "a3": "Toca el punto en la tabla del juego para corregirlo o borrarlo. El punto editado muestra su valor anterior.",
+      "q4": "¿Cómo le paso el juego a otra persona?", "a4": "Desde el menú del juego, elige Compartir juego y la otra persona escanea el código QR con Tantos.",
+      "q5": "Compré Tantos Pro y no lo veo activo", "a5": "Abre Tantos Pro y restaura tu compra con la misma cuenta de Apple o de Google con la que pagaste. Si sigue sin funcionar, escríbenos.",
+      "footer.privacy": "Política de privacidad", "footer.terms": "Términos de uso", "footer.made": "Hecho en República Dominicana.",
+      "mail.subject": "Soporte de Tantos"
+    },
+    en: {
+      "meta.title": "Tantos · Domino scorekeeper",
+      "meta.description": "Score your domino games. Forget the pen and paper: Tantos keeps score for you. For iPhone and Android.",
+      "nav.label": "Main", "lang.label": "Language", "footer.label": "Footer",
+      "nav.features": "Features", "nav.pro": "Pro", "nav.support": "Support",
+      "hero.title": "Score your domino games",
+      "hero.sub": "Forget the pen and paper. Tantos keeps score for you.",
+      "hero.ios": "Download for iPhone", "hero.android": "Download for Android",
+      "hero.iosSoon": "Coming soon to iPhone", "hero.androidSoon": "Coming soon to Android",
+      "hero.note": "Free, in English and Spanish.",
+      "features.eyebrow": "Features",
+      "features.title": "Everything your table needs",
+      "features.lead": "Made for playing, not for arguing over the score.",
+      "f1.t": "Teams or individual", "f1.d": "Play in pairs or every player for themselves, up to 4 players.",
+      "f2.t": "Score with the camera", "f2.d": "Take a photo of the tiles and Tantos counts the pips for you.",
+      "f3.t": "Edit or delete points", "f3.d": "Made a mistake? Tap a point to fix it or delete it, and everyone sees what changed.",
+      "f4.t": "House rules", "f4.d": "Quick points, extra points and draws: play the way your table plays.",
+      "f5.t": "Scoreboard and history", "f5.d": "See who's winning the game and look back at every match.",
+      "f6.t": "Share the game", "f6.d": "Have to leave? Pass the game to someone else with a QR code.",
+      "spot.eyebrow": "Scoreboard", "spot.title": "See who's winning",
+      "spot.text": "Matches won, matches lost and total points for every team, plus every match with its result and how long it took.",
+      "pro.title": "Play without ads", "pro.lead": "An optional extra for tables that play every day.",
+      "pro.i1": "No ads", "pro.i2": "Your full match history",
+      "pro.i3": "Advanced house rules: edit them and create your own",
+      "support.eyebrow": "Help", "support.title": "Support",
+      "support.text": "Have a question, an idea or found a bug? Write to us and we'll get back to you as soon as we can.",
+      "support.button": "Email us", "support.or": "Or write to ",
+      "faq.title": "Frequently asked questions",
+      "q1": "Is Tantos free?", "a1": "Yes. You can score as many matches as you want for free. Tantos Pro is optional: it removes ads and adds extra features.",
+      "q2": "How do I score with the camera?", "a2": "In Add points, tap the camera icon, take a photo of the tiles and check the total before adding it.",
+      "q3": "How do I fix a point?", "a3": "Tap the point in the game table to fix it or delete it. Edited points show their previous value.",
+      "q4": "How do I pass the game to someone else?", "a4": "From the game menu, choose Share game and the other person scans the QR code with Tantos.",
+      "q5": "I bought Tantos Pro but it isn't active", "a5": "Open Tantos Pro and restore your purchase with the same Apple or Google account you paid with. If it still doesn't work, email us.",
+      "footer.privacy": "Privacy policy", "footer.terms": "Terms of use", "footer.made": "Made in the Dominican Republic.",
+      "mail.subject": "Tantos support"
+    }
+  };
+
+  function pickLang() {
+    var p = new URLSearchParams(location.search).get("lang");
+    if (p === "es" || p === "en") return p;
+    try { var s = localStorage.getItem("tantos-lang"); if (s === "es" || s === "en") return s; } catch (e) {}
+    var n = (navigator.languages && navigator.languages[0]) || navigator.language || "es";
+    return n.toLowerCase().indexOf("es") === 0 ? "es" : (n.toLowerCase().indexOf("en") === 0 ? "en" : "es");
+  }
+
+  function apply(lang) {
+    var t = TEXT[lang];
+    document.documentElement.lang = lang;
+    document.title = t["meta.title"];
+    document.querySelector('meta[name="description"]').setAttribute("content", t["meta.description"]);
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (t[k] !== undefined) el.textContent = t[k];
+    });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-aria");
+      if (t[k] !== undefined) el.setAttribute("aria-label", t[k]);
+    });
+    document.querySelectorAll(".lang button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
+    });
+    document.querySelectorAll('[data-link="privacy"]').forEach(function (a) { a.href = CONFIG.privacy[lang]; });
+    document.querySelectorAll('[data-link="terms"]').forEach(function (a) { a.href = CONFIG.terms[lang]; });
+    var mail = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(t["mail.subject"]);
+    document.querySelectorAll('[data-link="email"]').forEach(function (a) { a.href = mail; });
+    var small = document.querySelector("[data-email-text]");
+    small.textContent = "";
+    small.appendChild(document.createTextNode(t["support.or"]));
+    var a = document.createElement("a"); a.href = mail; a.textContent = CONFIG.email; small.appendChild(a);
+  }
+
+  // Store buttons: real link, or a disabled "coming soon" button when the link is empty.
+  [["appStore", "hero.ios"], ["playStore", "hero.android"]].forEach(function (pair) {
+    var url = CONFIG[pair[0]];
+    document.querySelectorAll('[data-link="' + pair[0] + '"]').forEach(function (a) {
+      if (url) {
+        a.href = url;
+      } else {
+        a.removeAttribute("href");
+        a.setAttribute("aria-disabled", "true");
+        a.querySelector("[data-i18n]").setAttribute("data-i18n", pair[1] + "Soon");
+      }
+    });
+  });
+
+  // Android visitors (or everyone, while iPhone is "coming soon") see the Android button first and filled.
+  if (/android/i.test(navigator.userAgent) || (!CONFIG.appStore && CONFIG.playStore)) {
+    var ios = document.querySelector('[data-link="appStore"]'), and = document.querySelector('[data-link="playStore"]');
+    ios.className = "btn btn-ghost"; and.className = "btn btn-light";
+    and.parentNode.insertBefore(and, ios);
+  }
+
+  document.querySelectorAll(".lang button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var l = b.getAttribute("data-lang");
+      try { localStorage.setItem("tantos-lang", l); } catch (e) {}
+      apply(l);
+    });
+  });
+
+  apply(pickLang());
+</script>
+</body>
+</html>
