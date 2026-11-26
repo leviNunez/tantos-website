@@ -27,7 +27,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --blue: #0068BA;
@@ -45,7 +45,7 @@
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-family: Inter, "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     color: var(--ink);
     background: var(--card);
     -webkit-font-smoothing: antialiased;
@@ -61,18 +61,29 @@
   .top .wrap { display: flex; align-items: center; gap: 16px; height: 76px; }
   .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; font-size: 22px; letter-spacing: -0.3px; }
   .brand img { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.3); }
-  .nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .nav { margin-inline-start: auto; display: flex; align-items: center; gap: 4px; }
   .nav a { color: rgba(255,255,255,0.9); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 12px; border-radius: 999px; }
   .nav a:hover { background: rgba(255,255,255,0.12); }
-  .lang {
-    display: inline-flex; border-radius: 999px; padding: 3px; background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.28); margin-left: 6px;
+  /* The language menu. Scoped under .top to win over the FAQ's details and summary. */
+  .top .langs { position: relative; margin-inline-start: 6px; border: 0; }
+  .top .langs > summary {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 6px 14px;
+    border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28);
+    color: #fff; font-size: 14px; font-weight: 600; white-space: nowrap;
   }
-  .lang button {
-    font: inherit; font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); background: transparent;
-    border: 0; border-radius: 999px; padding: 6px 11px; cursor: pointer; min-height: 32px;
+  .top .langs > summary::after { content: none; }
+  .top .langs > summary:hover, .top .langs[open] > summary { background: rgba(255,255,255,0.24); }
+  .top .langs svg { width: 16px; height: 16px; flex: none; }
+  .top .langs ul {
+    position: absolute; inset-inline-end: 0; top: calc(100% + 8px); min-width: 200px; margin: 0; padding: 6px;
+    list-style: none; background: var(--card); border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   }
-  .lang button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+  .top .langs button {
+    display: block; width: 100%; text-align: start; font: inherit; font-size: 15px; font-weight: 500;
+    color: var(--ink); background: transparent; border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer;
+  }
+  .top .langs button:hover { background: var(--bg); }
+  .top .langs button[aria-pressed="true"] { color: var(--blue); font-weight: 700; }
 
   /* Hero */
   .hero { background: var(--grad); color: #fff; overflow: hidden; }
@@ -81,7 +92,7 @@
   .hero p.sub { margin: 20px 0 0; font-size: clamp(18px, 2vw, 22px); line-height: 1.45; color: rgba(255,255,255,0.92); max-width: 30ch; }
   .stores { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   .store {
-    display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 22px 0 18px; border-radius: 16px;
+    display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding-block: 0; padding-inline: 18px 22px; border-radius: 16px;
     background: #fff; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 16px;
     border: 0; box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     transition: transform .15s ease;
@@ -166,12 +177,12 @@
   details { border-top: 1px solid var(--line); }
   details:last-of-type { border-bottom: 1px solid var(--line); }
   summary {
-    list-style: none; cursor: pointer; padding: 18px 40px 18px 0; position: relative;
+    list-style: none; cursor: pointer; padding-block: 18px; padding-inline: 0 40px; position: relative;
     font-weight: 600; font-size: 17px; min-height: 44px;
   }
   summary::-webkit-details-marker { display: none; }
   summary::after {
-    content: ""; position: absolute; right: 6px; top: 50%; width: 10px; height: 10px; margin-top: -7px;
+    content: ""; position: absolute; inset-inline-end: 6px; top: 50%; width: 10px; height: 10px; margin-top: -7px;
     border-right: 2px solid var(--ink-2); border-bottom: 2px solid var(--ink-2); transform: rotate(45deg); transition: transform .2s ease;
   }
   details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
@@ -184,7 +195,12 @@
   footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
   footer a { color: #fff; text-decoration: none; }
   footer a:hover { text-decoration: underline; }
-  footer .legal { margin-left: auto; }
+  footer .legal { margin-inline-start: auto; }
+
+  /* Arabic: letter spacing pulls joined letters apart, and its glyphs need taller lines. */
+  :lang(ar) h1, :lang(ar) h2, :lang(ar) h3, :lang(ar) .eyebrow, :lang(ar) .perks b { letter-spacing: 0; }
+  :lang(ar) .hero h1 { line-height: 1.25; }
+  :lang(ar) h2, :lang(ar) .row h3 { line-height: 1.35; }
 
   @media (max-width: 960px) {
     .hero .wrap { grid-template-columns: 1fr; padding-top: 108px; min-height: 0; }
@@ -211,7 +227,7 @@
     .pro-head { flex-direction: column; align-items: flex-start; gap: 18px; }
     .pro-head img { width: 72px; height: 72px; border-radius: 18px; }
     .row p { font-size: 17px; }
-    footer .legal { margin-left: 0; }
+    footer .legal { margin-inline-start: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -228,10 +244,16 @@
       <a href="#funciones" data-i18n="nav.features">Funciones</a>
       <a href="#pro" data-i18n="nav.pro">Pro</a>
       <a href="#soporte" data-i18n="nav.support">Soporte</a>
-      <div class="lang" role="group" aria-label="Idioma" data-i18n-aria="lang.label">
-        <button type="button" data-lang="es" aria-pressed="true">ES</button>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
-      </div>
+      <details class="langs">
+        <summary aria-label="Idioma: Español"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.9 3.9 6 3.9 9.5s-1.3 6.6-3.9 9.5c-2.6-2.9-3.9-6-3.9-9.5s1.3-6.6 3.9-9.5z"/></svg><span data-lang-name>Español</span></summary>
+        <ul>
+          <li><button type="button" data-lang="en" lang="en" aria-pressed="false">English</button></li>
+          <li><button type="button" data-lang="es" lang="es" aria-pressed="true">Español</button></li>
+          <li><button type="button" data-lang="fr" lang="fr" aria-pressed="false">Français</button></li>
+          <li><button type="button" data-lang="pt" lang="pt-BR" aria-pressed="false">Português (Brasil)</button></li>
+          <li><button type="button" data-lang="ar" lang="ar" aria-pressed="false">العربية</button></li>
+        </ul>
+      </details>
     </nav>
   </div>
 </header>
@@ -252,7 +274,7 @@
             <span data-i18n="hero.android">Disponible en Google Play</span>
           </a>
         </div>
-        <p class="note" data-i18n="hero.note">Gratis, en español y en inglés.</p>
+        <p class="note" data-i18n="hero.note">Gratis, en español, inglés, francés, portugués y árabe.</p>
       </div>
       <div class="duo" aria-hidden="true">
         <div class="phone back"><img data-img="anotar" src="img/es/anotar.webp" alt="" width="720" height="1561"></div>
@@ -434,9 +456,15 @@
     appStore: "https://apps.apple.com/app/id6836431831",
     playStore: "https://play.google.com/store/apps/details?id=com.levilabs.tantos",
     email: "soporte.tantosapp@gmail.com",
-    privacy: { es: "/privacidad/", en: "/privacy/" },
-    terms: { es: "/terminos/", en: "/terms/" }
+    privacy: { es: "/privacidad/", en: "/privacy/", fr: "/fr/privacy/", pt: "/pt/privacy/", ar: "/ar/privacy/" },
+    terms: { es: "/terminos/", en: "/terms/", fr: "/fr/terms/", pt: "/pt/terms/", ar: "/ar/terms/" }
   };
+
+  // The site's languages, as the menu lists them. Screenshots exist in Spanish
+  // and English; every other language shows the English ones.
+  var LANGS = ["en", "es", "fr", "pt", "ar"];
+  var NAMES = { en: "English", es: "Español", fr: "Français", pt: "Português (Brasil)", ar: "العربية" };
+  var HTML_LANG = { pt: "pt-BR" };
   // ─────────────────────────────────────────────────────────────────────
 
   var TEXT = {
@@ -449,7 +477,7 @@
       "hero.sub": "Olvídate del papel y el lápiz. Tantos lleva la cuenta por ti.",
       "hero.ios": "Descargar en el App Store", "hero.android": "Disponible en Google Play",
       "hero.iosSoon": "Pronto en el App Store", "hero.androidSoon": "Pronto en Google Play",
-      "hero.note": "Gratis, en español y en inglés.",
+      "hero.note": "Gratis, en español, inglés, francés, portugués y árabe.",
       "features.eyebrow": "Funciones",
       "features.title": "Todo lo que necesita tu mesa",
       "features.lead": "Hecho para jugar, no para pelear por la cuenta.",
@@ -511,7 +539,7 @@
       "hero.sub": "Forget the pen and paper. Tantos keeps score for you.",
       "hero.ios": "Download on the App Store", "hero.android": "Get it on Google Play",
       "hero.iosSoon": "Coming to the App Store", "hero.androidSoon": "Coming to Google Play",
-      "hero.note": "Free, in English and Spanish.",
+      "hero.note": "Free, in English, Spanish, French, Portuguese and Arabic.",
       "features.eyebrow": "Features",
       "features.title": "Everything your table needs",
       "features.lead": "Made for playing, not for arguing over the score.",
@@ -563,20 +591,295 @@
       "q5": "I bought Tantos Pro but it isn't active", "a5": "Open the Tantos Pro screen and tap Restore purchase. Use the same Apple or Google account you paid with. If it still doesn't work, email us.",
       "footer.privacy": "Privacy policy", "footer.terms": "Terms of use", "footer.made": "Made in the Dominican Republic.",
       "mail.subject": "Tantos support"
+    },
+    fr: {
+      "meta.title": "Tantos · Compteur de points pour les dominos",
+      "meta.description": "Notez les scores de vos parties de dominos. Oubliez le papier et le crayon : Tantos compte les points pour vous. Pour iPhone et Android.",
+      "nav.label": "Navigation principale",
+      "lang.label": "Langue",
+      "footer.label": "Pied de page",
+      "nav.features": "Fonctionnalités",
+      "nav.pro": "Pro",
+      "nav.support": "Assistance",
+      "hero.title": "Le meilleur compteur de points aux dominos",
+      "hero.sub": "Oubliez le papier et le crayon. Tantos compte les points pour vous.",
+      "hero.ios": "Télécharger dans l’App Store",
+      "hero.android": "Disponible sur Google Play",
+      "hero.iosSoon": "Bientôt sur l’App Store",
+      "hero.androidSoon": "Bientôt sur Google Play",
+      "hero.note": "Gratuit, en français, anglais, espagnol, portugais et arabe.",
+      "features.eyebrow": "Fonctionnalités",
+      "features.title": "Tout ce qu’il faut à votre table",
+      "features.lead": "Fait pour jouer, pas pour se disputer sur le score.",
+      "r1.t": "Comptez avec la caméra",
+      "r1.d": "Prenez les dominos en photo et Tantos compte les points pour vous.",
+      "r1.alt": "Écran Comment scanner, avec des conseils pour la caméra",
+      "r2.t": "En équipes ou en solo",
+      "r2.d": "Jouez en équipes de deux ou chacun pour soi, jusqu’à 4 joueurs, chacun avec sa couleur et sa colonne.",
+      "r2.alt": "Jeu en individuel avec quatre joueurs",
+      "r3.t": "Modifiez ou supprimez des points",
+      "r3.d": "Une erreur ? Touchez un point pour le corriger ou le supprimer. Les points modifiés sont signalés et affichent leur valeur précédente : tout le monde voit ce qui a changé.",
+      "r3.alt": "Écran Modifier le point, avec la valeur précédente",
+      "r4.t": "Votre table, vos règles",
+      "r4.d": "Jouez comme on joue à votre table. Choisissez l’objectif et activez seulement les règles que vous utilisez.",
+      "r4.l1b": "Objectif :",
+      "r4.l1": "100, 200 ou le nombre de votre choix.",
+      "r4.l2b": "Points rapides :",
+      "r4.l2": "marqués tout de suite.",
+      "r4.l3b": "Points bonus :",
+      "r4.l3": "ajoutés à une manche que vous avez déjà gagnée.",
+      "r4.l4b": "Égalité :",
+      "r4.l4": "tout le monde reçoit les mêmes points et personne ne gagne la manche.",
+      "r4.alt": "Écran Modifier le jeu, avec les règles de la table",
+      "r5.t": "Les résultats de chaque partie",
+      "r5.d": "À la fin d’une partie, voyez qui a gagné, quand elle a commencé, combien de temps elle a duré et combien de manches ont été jouées. Partagez les résultats d’un seul geste.",
+      "r5.alt": "Écran des résultats d’une partie",
+      "r6.t": "Classement et historique",
+      "r6.d": "Parties gagnées, parties perdues et points totaux de chaque équipe, plus chaque partie avec son résultat et sa durée.",
+      "r6.alt": "Écran Statistiques et historique",
+      "r8.t": "Changez l’apparence",
+      "r8.d": "Choisissez un style d’affichage : Moderne discret, Moderne vif ou Classique. Vous pouvez aussi changer le thème et la taille du texte.",
+      "r8.alt": "Écran Modifier l’apparence, avec les styles d’affichage",
+      "r7.t": "Partagez le jeu",
+      "r7.d": "Vous devez partir ? Passez le jeu à quelqu’un d’autre avec un code QR pour qu’il continue à compter les points sur son téléphone. Le jeu reste aussi sur le vôtre.",
+      "r7.alt": "Code QR pour passer le jeu à un autre téléphone",
+      "pro.lead": "Payez une fois, c’est à vous pour toujours.",
+      "pro.note": "Paiement unique. Sans abonnement.",
+      "p1.t": "Sans pub",
+      "p1.d": "Jouez sans interruption.",
+      "p2.t": "Historique complet",
+      "p2.d": "Toutes vos parties depuis la première, avec leur détail et leur tableau des points.",
+      "p3.t": "Écran de jeu avancé",
+      "p3.d": "Manches gagnées et chronomètre de jeu.",
+      "p4.t": "Plus de statistiques",
+      "p4.d": "Voyez le total des manches gagnées, la meilleure manche et plus encore.",
+      "p5.t": "Feuille de score avec total",
+      "p5.d": "Vérifiez votre nouveau total avant d’enregistrer, comme « Total : 141 + 74 = 215 ».",
+      "p6.t": "Règles de la table personnalisées",
+      "p6.d": "Modifiez, supprimez ou créez vos propres règles.",
+      "p7.t": "Sauvegarde dans le cloud",
+      "p7.d": "Vos parties sur n’importe quel téléphone.",
+      "p8.t": "Suggérez des fonctions",
+      "p8.d": "Dites-moi ce qui manque à Tantos. Je lis chaque idée.",
+      "support.eyebrow": "Aide",
+      "support.title": "Assistance",
+      "support.text": "Une question, une idée ou un bug ? Écrivez-nous et nous vous répondrons dès que possible.",
+      "support.button": "Écrivez-nous",
+      "support.or": "Ou écrivez à ",
+      "faq.title": "Questions fréquentes",
+      "q1": "Tantos est-il gratuit ?",
+      "a1": "Oui. Vous pouvez compter les points d’autant de parties que vous voulez, gratuitement. Tantos Pro est facultatif : un paiement unique, sans abonnement, qui supprime les pubs et ajoute des fonctionnalités en plus.",
+      "q2": "Comment compter les points avec la caméra ?",
+      "a2": "Dans Ajouter des points, touchez l’icône de la caméra, suivez les conseils et touchez Ouvrir la caméra. Vérifiez le total avant de l’enregistrer.",
+      "q3": "Comment corriger un point ?",
+      "a3": "Touchez le point dans le tableau des points. Changez le nombre et touchez Enregistrer, ou touchez Supprimer pour le retirer. Vous pouvez corriger n’importe quel point tant que la partie est en cours ; une fois la partie terminée, le tableau est figé.",
+      "q4": "Comment passer le jeu à quelqu’un d’autre ?",
+      "a4": "Sur votre téléphone, touchez Partager dans le menu à trois points pour afficher le code QR. Sur l’autre téléphone, ouvrez Tantos, touchez Partager dans le menu à trois points, puis l’icône de scan en haut à droite, et pointez la caméra vers le code.",
+      "q5": "J’ai acheté Tantos Pro, mais il n’est pas actif",
+      "a5": "Ouvrez l’écran Tantos Pro et touchez Restaurer l’achat. Utilisez le même compte Apple ou Google que pour le paiement. Si ça ne marche toujours pas, écrivez-nous.",
+      "footer.privacy": "Politique de confidentialité",
+      "footer.terms": "Conditions d’utilisation",
+      "footer.made": "Conçu en République dominicaine.",
+      "mail.subject": "Assistance Tantos"
+    },
+    pt: {
+      "meta.title": "Tantos · Placar de dominó",
+      "meta.description": "Marque o placar das suas partidas de dominó. Esqueça o papel e a caneta: o Tantos marca os pontos para você. Para iPhone e Android.",
+      "nav.label": "Principal",
+      "lang.label": "Idioma",
+      "footer.label": "Rodapé",
+      "nav.features": "Recursos",
+      "nav.pro": "Pro",
+      "nav.support": "Suporte",
+      "hero.title": "O melhor placar de dominó",
+      "hero.sub": "Esqueça o papel e a caneta. O Tantos marca os pontos para você.",
+      "hero.ios": "Baixar na App Store",
+      "hero.android": "Disponível no Google Play",
+      "hero.iosSoon": "Em breve na App Store",
+      "hero.androidSoon": "Em breve no Google Play",
+      "hero.note": "Grátis, em português, inglês, espanhol, francês e árabe.",
+      "features.eyebrow": "Recursos",
+      "features.title": "Tudo o que a sua mesa precisa",
+      "features.lead": "Feito para jogar, não para brigar pelo placar.",
+      "r1.t": "Marque com a câmera",
+      "r1.d": "Tire uma foto das pedras e o Tantos conta os pontos para você.",
+      "r1.alt": "Tela “Como escanear” com dicas para a câmera",
+      "r2.t": "Em duplas ou individual",
+      "r2.d": "Jogue em duplas ou cada um por si, até 4 jogadores, cada um com sua cor e sua coluna.",
+      "r2.alt": "Jogo individual com quatro jogadores",
+      "r3.t": "Edite ou apague pontos",
+      "r3.d": "Errou? Toque num ponto para corrigir ou apagar. Os pontos editados ficam marcados e mostram o valor anterior, para todo mundo ver o que mudou.",
+      "r3.alt": "Tela “Editar ponto” mostrando o valor anterior",
+      "r4.t": "Sua mesa, suas regras",
+      "r4.d": "Jogue do jeito da sua mesa. Escolha a meta e ligue só as regras que vocês usam.",
+      "r4.l1b": "Meta:",
+      "r4.l1": "100, 200 ou o número que você quiser.",
+      "r4.l2b": "Pontos rápidos:",
+      "r4.l2": "entram no placar na hora.",
+      "r4.l3b": "Pontos extras:",
+      "r4.l3": "somam a uma rodada que você já ganhou.",
+      "r4.l4b": "Empate:",
+      "r4.l4": "todos recebem os mesmos pontos e ninguém ganha a rodada.",
+      "r4.alt": "Tela “Editar jogo” com as regras da mesa",
+      "r5.t": "Resultados de cada partida",
+      "r5.d": "Quando uma partida termina, veja quem ganhou, quando começou, quanto durou e quantas rodadas foram jogadas. Compartilhe com um toque.",
+      "r5.alt": "Tela de resultados da partida",
+      "r6.t": "Classificação e histórico",
+      "r6.d": "Partidas ganhas, partidas perdidas e pontos totais de cada dupla, além de cada partida com o resultado e quanto durou.",
+      "r6.alt": "Tela “Estatísticas e histórico”",
+      "r8.t": "Mude o visual",
+      "r8.d": "Escolha um estilo de placar: Moderno discreto, Moderno vibrante ou Clássico. Você também pode mudar o tema e o tamanho do texto.",
+      "r8.alt": "Tela “Mudar aparência” com os estilos de placar",
+      "r7.t": "Compartilhe o jogo",
+      "r7.d": "Precisa ir embora? Passe o jogo para outra pessoa com um código QR, para ela continuar marcando no celular dela. O jogo também continua no seu.",
+      "r7.alt": "Código QR para passar o jogo para outro celular",
+      "pro.lead": "Pague uma vez e é seu para sempre.",
+      "pro.note": "Pagamento único. Sem assinatura.",
+      "p1.t": "Sem anúncios",
+      "p1.d": "Jogue sem interrupções.",
+      "p2.t": "Histórico completo",
+      "p2.d": "Todas as partidas desde a primeira, com detalhes e tabela de pontos.",
+      "p3.t": "Tela de jogo avançada",
+      "p3.d": "Rodadas ganhas e cronômetro do jogo.",
+      "p4.t": "Mais estatísticas",
+      "p4.d": "Veja o total de rodadas ganhas, a melhor rodada e mais.",
+      "p5.t": "Placar com a soma",
+      "p5.d": "Confira seu novo total antes de salvar, como “Total: 141 + 74 = 215”.",
+      "p6.t": "Regras da mesa personalizadas",
+      "p6.d": "Edite, exclua ou crie suas próprias regras.",
+      "p7.t": "Backup na nuvem",
+      "p7.d": "Suas partidas em qualquer celular.",
+      "p8.t": "Sugira recursos",
+      "p8.d": "Me conte o que falta no Tantos. Leio cada ideia.",
+      "support.eyebrow": "Ajuda",
+      "support.title": "Suporte",
+      "support.text": "Tem uma dúvida, uma ideia ou encontrou um bug? Escreva para a gente e respondemos o quanto antes.",
+      "support.button": "Mande um e-mail",
+      "support.or": "Ou escreva para ",
+      "faq.title": "Perguntas frequentes",
+      "q1": "O Tantos é grátis?",
+      "a1": "Sim. Você pode marcar quantas partidas quiser de graça. O Tantos Pro é opcional: um pagamento único, sem assinatura, que remove os anúncios e adiciona recursos extras.",
+      "q2": "Como marco os pontos com a câmera?",
+      "a2": "Em Marcar pontos, toque no ícone da câmera, siga as dicas e toque em Abrir câmera. Confira o total antes de salvar.",
+      "q3": "Como corrijo um ponto?",
+      "a3": "Toque no ponto na tabela de pontos. Mude o número e toque em Salvar, ou toque em Remover para apagá-lo. Dá para corrigir qualquer ponto enquanto a partida estiver aberta; quando ela termina, a tabela fica fixa.",
+      "q4": "Como passo o jogo para outra pessoa?",
+      "a4": "No seu celular, toque em Compartilhar no menu de três pontinhos para mostrar o código QR. No outro celular, abra o Tantos, toque em Compartilhar no menu de três pontinhos, depois no ícone de escanear no canto superior direito, e aponte a câmera para o código.",
+      "q5": "Comprei o Tantos Pro, mas ele não está ativo",
+      "a5": "Abra a tela do Tantos Pro e toque em Restaurar compra. Use a mesma Conta Apple ou Conta do Google com que você pagou. Se ainda não funcionar, mande um e-mail para a gente.",
+      "footer.privacy": "Política de privacidade",
+      "footer.terms": "Termos de uso",
+      "footer.made": "Feito na República Dominicana.",
+      "mail.subject": "Suporte do Tantos"
+    },
+    ar: {
+      "meta.title": "Tantos · تطبيق تسجيل نقاط الدومينو",
+      "meta.description": "سجّل نقاط مبارياتك في الدومينو. انسَ القلم والورقة: Tantos يسجّل النقاط عنك. على iPhone و Android.",
+      "nav.label": "القائمة الرئيسية",
+      "lang.label": "اللغة",
+      "footer.label": "تذييل الصفحة",
+      "nav.features": "الميزات",
+      "nav.pro": "Pro",
+      "nav.support": "الدعم",
+      "hero.title": "أفضل تطبيق لتسجيل نقاط الدومينو",
+      "hero.sub": "انسَ القلم والورقة. Tantos يسجّل النقاط عنك.",
+      "hero.ios": "تنزيل من App Store",
+      "hero.android": "احصل عليه من Google Play",
+      "hero.iosSoon": "قريبًا على App Store",
+      "hero.androidSoon": "قريبًا على Google Play",
+      "hero.note": "مجاني، بالعربية والإنجليزية والإسبانية والفرنسية والبرتغالية.",
+      "features.eyebrow": "الميزات",
+      "features.title": "كل ما تحتاجه طاولتك",
+      "features.lead": "صُمّم للعب، لا للجدال على النقاط.",
+      "r1.t": "التسجيل بالكاميرا",
+      "r1.d": "التقط صورة للأحجار، ويعدّ Tantos النقاط عنك.",
+      "r1.alt": "شاشة «طريقة المسح» مع نصائح لاستخدام الكاميرا",
+      "r2.t": "فرق أو فردي",
+      "r2.d": "اللعب بالشراكة أو كلٌّ لنفسه، حتى 4 لاعبين، لكلٍّ منهم لونه وعموده.",
+      "r2.alt": "لعبة فردية بأربعة لاعبين",
+      "r3.t": "تعديل النقاط أو حذفها",
+      "r3.d": "أخطأت؟ اضغط على نقطة لتصحيحها أو حذفها. تُميَّز النقاط المعدّلة وتعرض قيمتها السابقة، ليرى الجميع ما تغيّر.",
+      "r3.alt": "شاشة «تعديل النقطة» وتظهر فيها القيمة السابقة",
+      "r4.t": "طاولتك، قواعدك",
+      "r4.d": "العب كما تلعب طاولتك. اختر الهدف وفعّل القواعد التي تستخدمها فقط.",
+      "r4.l1b": "الهدف:",
+      "r4.l1": "100 أو 200 أو أي رقم تريده.",
+      "r4.l2b": "النقاط السريعة:",
+      "r4.l2": "تُسجَّل فورًا.",
+      "r4.l3b": "النقاط الإضافية:",
+      "r4.l3": "تُضاف إلى جولة ربحتها.",
+      "r4.l4b": "التعادل:",
+      "r4.l4": "يحصل الجميع على النقاط نفسها ولا يربح أحد الجولة.",
+      "r4.alt": "شاشة «تعديل اللعبة» مع قواعد الطاولة",
+      "r5.t": "نتائج كل مباراة",
+      "r5.d": "عند انتهاء المباراة، اعرف من فاز، ومتى بدأت، وكم استغرقت، وكم جولة لُعبت. وشاركها بلمسة واحدة.",
+      "r5.alt": "شاشة نتائج المباراة",
+      "r6.t": "الترتيب والسجل",
+      "r6.d": "المباريات الرابحة والخاسرة ومجموع النقاط لكل فريق، إلى جانب كل مباراة بنتيجتها ومدتها.",
+      "r6.alt": "شاشة «الإحصاءات والسجل»",
+      "r8.t": "غيّر المظهر",
+      "r8.d": "اختر نمط لوحة النتائج: «عصري هادئ» أو «عصري زاهٍ» أو «كلاسيكي». ويمكنك أيضًا تغيير السمة وحجم النص.",
+      "r8.alt": "شاشة «تغيير المظهر» مع أنماط لوحة النتائج",
+      "r7.t": "مشاركة اللعبة",
+      "r7.d": "هل عليك المغادرة؟ انقل اللعبة إلى شخص آخر برمز QR ليتابع تسجيل النقاط على هاتفه. وتبقى اللعبة على هاتفك أيضًا.",
+      "r7.alt": "رمز QR لنقل اللعبة إلى هاتف آخر",
+      "pro.lead": "ادفع مرة واحدة ويصبح لك إلى الأبد.",
+      "pro.note": "دفعة واحدة. بلا اشتراكات.",
+      "p1.t": "بلا إعلانات",
+      "p1.d": "العب دون مقاطعات.",
+      "p2.t": "السجل الكامل",
+      "p2.d": "كل مبارياتك منذ الأولى، بتفاصيلها وجدول نقاطها.",
+      "p3.t": "شاشة لعب متقدّمة",
+      "p3.d": "الجولات الرابحة ومؤقّت للعب.",
+      "p4.t": "مزيد من الإحصاءات",
+      "p4.d": "اطّلع على مجموع الجولات الرابحة وأفضل جولة والمزيد.",
+      "p5.t": "ورقة تسجيل تحسب المجموع",
+      "p5.d": "راجع مجموعك الجديد قبل الحفظ، مثل «المجموع: 141 + 74 = 215».",
+      "p6.t": "قواعد طاولة مخصّصة",
+      "p6.d": "عدّل قواعدك أو احذفها أو أنشئ قواعد خاصة بك.",
+      "p7.t": "النسخ الاحتياطي السحابي",
+      "p7.d": "مبارياتك على أي هاتف.",
+      "p8.t": "اقتراح ميزات",
+      "p8.d": "أخبرني بما ينقص Tantos. أقرأ كل فكرة.",
+      "support.eyebrow": "المساعدة",
+      "support.title": "الدعم",
+      "support.text": "لديك سؤال أو فكرة، أو وجدت خطأً؟ راسلنا وسنردّ عليك في أقرب وقت ممكن.",
+      "support.button": "راسلنا",
+      "support.or": "أو راسلنا على ",
+      "faq.title": "الأسئلة الشائعة",
+      "q1": "هل Tantos مجاني؟",
+      "a1": "نعم. يمكنك تسجيل نقاط ما تشاء من المباريات مجانًا. أما Tantos Pro فاختياري: دفعة واحدة بلا اشتراك، تزيل الإعلانات وتضيف ميزات إضافية.",
+      "q2": "كيف أسجّل النقاط بالكاميرا؟",
+      "a2": "في شاشة «تسجيل النقاط»، اضغط على أيقونة الكاميرا، واتبع النصائح، ثم اضغط على «فتح الكاميرا». راجع المجموع قبل حفظه.",
+      "q3": "كيف أصحّح نقطة؟",
+      "a3": "اضغط على النقطة في جدول النقاط. غيّر الرقم واضغط على «حفظ»، أو اضغط على «حذف» لإزالتها. يمكنك تصحيح أي نقطة ما دامت المباراة مفتوحة؛ وبعد انتهائها يصبح الجدول ثابتًا.",
+      "q4": "كيف أنقل اللعبة إلى شخص آخر؟",
+      "a4": "على هاتفك، اضغط على «مشاركة» في قائمة النقاط الثلاث لعرض رمز QR. وعلى الهاتف الآخر، افتح Tantos، واضغط على «مشاركة» في قائمة النقاط الثلاث، ثم على أيقونة المسح في أعلى الشاشة، ووجّه الكاميرا نحو الرمز.",
+      "q5": "اشتريت Tantos Pro لكنه غير مفعّل",
+      "a5": "افتح شاشة Tantos Pro واضغط على «استعادة الشراء». استخدم حساب Apple أو Google نفسه الذي دفعت به. وإذا استمرت المشكلة، راسلنا.",
+      "footer.privacy": "سياسة الخصوصية",
+      "footer.terms": "شروط الاستخدام",
+      "footer.made": "صُنع في جمهورية الدومينيكان.",
+      "mail.subject": "دعم Tantos"
     }
   };
 
+  function known(l) { return LANGS.indexOf(l) >= 0; }
+
+  // ?lang= first, then the visitor's last pick, then the browser's language;
+  // Spanish for any language the site doesn't have.
   function pickLang() {
     var p = new URLSearchParams(location.search).get("lang");
-    if (p === "es" || p === "en") return p;
-    try { var s = localStorage.getItem("tantos-lang"); if (s === "es" || s === "en") return s; } catch (e) {}
-    var n = ((navigator.languages && navigator.languages[0]) || navigator.language || "es").toLowerCase();
-    return n.indexOf("en") === 0 ? "en" : "es";
+    if (known(p)) return p;
+    try { var s = localStorage.getItem("tantos-lang"); if (known(s)) return s; } catch (e) {}
+    var n = ((navigator.languages && navigator.languages[0]) || navigator.language || "es").toLowerCase().slice(0, 2);
+    return known(n) ? n : "es";
   }
 
   function apply(lang) {
     var t = TEXT[lang];
-    document.documentElement.lang = lang;
+    document.documentElement.lang = HTML_LANG[lang] || lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.title = t["meta.title"];
     document.querySelector('meta[name="description"]').setAttribute("content", t["meta.description"]);
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
@@ -592,11 +895,13 @@
       if (t[k] !== undefined) el.setAttribute("alt", t[k]);
     });
     document.querySelectorAll("img[data-img]").forEach(function (img) {
-      img.src = "img/" + lang + "/" + img.getAttribute("data-img") + ".webp";
+      img.src = "img/" + (lang === "es" ? "es" : "en") + "/" + img.getAttribute("data-img") + ".webp";
     });
-    document.querySelectorAll(".lang button").forEach(function (b) {
+    document.querySelectorAll(".langs button").forEach(function (b) {
       b.setAttribute("aria-pressed", b.getAttribute("data-lang") === lang ? "true" : "false");
     });
+    document.querySelector("[data-lang-name]").textContent = NAMES[lang];
+    document.querySelector(".langs summary").setAttribute("aria-label", t["lang.label"] + ": " + NAMES[lang]);
     document.querySelectorAll('[data-link="privacy"]').forEach(function (a) { a.href = CONFIG.privacy[lang]; });
     document.querySelectorAll('[data-link="terms"]').forEach(function (a) { a.href = CONFIG.terms[lang]; });
     var mail = "mailto:" + CONFIG.email + "?subject=" + encodeURIComponent(t["mail.subject"]);
@@ -627,12 +932,18 @@
     and.parentNode.insertBefore(and, ios);
   }
 
-  document.querySelectorAll(".lang button").forEach(function (b) {
+  var menu = document.querySelector(".langs");
+  document.querySelectorAll(".langs button").forEach(function (b) {
     b.addEventListener("click", function () {
       var l = b.getAttribute("data-lang");
       try { localStorage.setItem("tantos-lang", l); } catch (e) {}
       apply(l);
+      menu.open = false;
     });
+  });
+  // The menu closes on a tap anywhere else, as a menu does.
+  document.addEventListener("click", function (e) {
+    if (menu.open && !menu.contains(e.target)) menu.open = false;
   });
 
   apply(pickLang());
