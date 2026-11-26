@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-PBM45N4D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidade · Tantos</title>
+<meta name="description" content="Política de privacidade do Tantos, o app para marcar os pontos do dominó.">
+<meta name="theme-color" content="#0A6ED1">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link rel="canonical" href="https://tantosapp.com/pt/privacy/">
+<link rel="alternate" hreflang="en" href="https://tantosapp.com/privacy/">
+<link rel="alternate" hreflang="es" href="https://tantosapp.com/privacidad/">
+<link rel="alternate" hreflang="fr" href="https://tantosapp.com/fr/privacy/">
+<link rel="alternate" hreflang="pt-BR" href="https://tantosapp.com/pt/privacy/">
+<link rel="alternate" hreflang="ar" href="https://tantosapp.com/ar/privacy/">
+<link rel="alternate" hreflang="x-default" href="https://tantosapp.com/privacy/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #0068BA;
+    --ink: #1C1B1F;
+    --ink-2: #49454F;
+    --line: #E3E2E6;
+    --bg: #F2F2F7;
+    --card: #FFFFFF;
+    --grad: linear-gradient(135deg, #0A6ED1 0%, #C00F0F 100%);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: Inter, "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.6;
+  }
+  a { color: var(--blue); overflow-wrap: anywhere; }
+  :focus-visible { outline: 3px solid #FFC94D; outline-offset: 3px; border-radius: 8px; }
+  .wrap { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .top { background: var(--grad); color: #fff; padding-bottom: 56px; }
+  .bar { display: flex; align-items: center; gap: 12px; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; font-size: 22px; letter-spacing: -0.3px; }
+  .brand img { width: 40px; height: 40px; border-radius: 10px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.3); }
+  .langs { margin-inline-start: auto; position: relative; }
+  .langs summary {
+    list-style: none; cursor: pointer; color: #fff; font-weight: 600; font-size: 14px;
+    padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.4); min-height: 36px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .langs summary::-webkit-details-marker { display: none; }
+  .langs summary:hover, .langs[open] summary { background: rgba(255,255,255,0.12); }
+  .langs svg { width: 16px; height: 16px; flex: none; }
+  .langs ul {
+    position: absolute; inset-inline-end: 0; top: calc(100% + 8px); z-index: 10; min-width: 200px;
+    margin: 0; padding: 6px; list-style: none; background: var(--card); border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .langs li a {
+    display: block; padding: 10px 14px; border-radius: 10px; color: var(--ink);
+    text-decoration: none; font-weight: 500; font-size: 15px;
+  }
+  .langs li a:hover { background: var(--bg); }
+  .langs li a[aria-current="page"] { color: var(--blue); font-weight: 700; }
+  .top h1 { margin: 28px 0 0; font-size: clamp(34px, 5vw, 48px); line-height: 1.08; font-weight: 800; letter-spacing: -0.02em; }
+  .top p { margin: 10px 0 0; color: rgba(255,255,255,0.85); font-size: 17px; }
+
+  .doc { background: var(--card); border-radius: 24px; padding: 40px; margin: -32px auto 0; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .doc h2 { margin: 32px 0 8px; font-size: 20px; line-height: 1.3; font-weight: 700; letter-spacing: -0.01em; }
+  .doc h2:first-child { margin-top: 0; }
+  .doc p, .doc li { color: var(--ink-2); font-size: 16px; }
+  .doc p { margin: 0 0 14px; }
+  .doc ul { margin: 0 0 14px; padding-inline-start: 22px; }
+  .doc li { margin-bottom: 8px; }
+
+  .more { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 64px; }
+  .more a {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px;
+    background: var(--card); color: var(--ink); font-weight: 600; text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .more a:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+
+  footer { background: var(--ink); color: rgba(255,255,255,0.75); padding: 32px 0; font-size: 15px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+  footer a { color: #fff; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  footer .legal { margin-inline-start: auto; }
+
+  /* Letter spacing pulls Arabic's joined letters apart. */
+  :lang(ar) .top h1, :lang(ar) .doc h2 { letter-spacing: 0; }
+  :lang(ar) .doc { line-height: 1.8; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .doc { padding: 24px 20px; border-radius: 20px; }
+    footer .legal { margin-inline-start: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="bar">
+      <a class="brand" href="/?lang=en" dir="ltr"><img src="/img/logo.svg" alt="" width="40" height="40">Tantos</a>
+      <details class="langs">
+        <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.9 3.9 6 3.9 9.5s-1.3 6.6-3.9 9.5c-2.6-2.9-3.9-6-3.9-9.5s1.3-6.6 3.9-9.5z"/></svg>Português (Brasil)</summary>
+        <ul>
+        <li><a href="/privacy/" hreflang="en" lang="en">English</a></li>
+        <li><a href="/privacidad/" hreflang="es" lang="es">Español</a></li>
+        <li><a href="/fr/privacy/" hreflang="fr" lang="fr">Français</a></li>
+        <li><a href="/pt/privacy/" hreflang="pt-BR" lang="pt-BR" aria-current="page">Português (Brasil)</a></li>
+        <li><a href="/ar/privacy/" hreflang="ar" lang="ar">العربية</a></li>
+        </ul>
+      </details>
+    </div>
+    <h1>Política de privacidade</h1>
+  </div>
+</header>
+
+<main class="wrap">
+  <article class="doc">
+<p>Esta política de privacidade se aplica ao Tantos Domino Scorekeeper, app para marcar os pontos do dominó (doravante denominado “Aplicativo”), para dispositivos móveis, criado por Levi Labs (doravante denominado “Prestador de Serviços”) como um serviço Freemium. Este serviço destina-se ao uso “NO ESTADO EM QUE SE ENCONTRA” (“AS IS”).</p>
+<h2>Coleta e uso de informações</h2>
+<p>O Aplicativo guarda no seu dispositivo os jogos que você joga (nomes de duplas e jogadores, pontuações e configurações).</p>
+<p>O Aplicativo não coleta informações precisas sobre a localização do seu dispositivo móvel.</p>
+<p>O Aplicativo não usa tecnologias de Inteligência Artificial (IA) para processar seus dados ou oferecer recursos.</p>
+<p>As fotos tiradas para contar os pontos das pedras de dominó são analisadas no seu dispositivo e nunca são enviadas.</p>
+<h2>Backup na nuvem (Tantos Pro)</h2>
+<p>O backup na nuvem é opcional. Ele só fica ativo se você tiver o Tantos Pro e o ativar por conta própria, entrando com a sua Conta do Google ou, no iPhone, com a sua Conta do Google ou Conta Apple. Sem ele, seus jogos ficam apenas no seu dispositivo.</p>
+<p>Quando o backup na nuvem está ativado, o Aplicativo armazena:</p>
+<ul><li>Informações da conta: com o Google, seu endereço de e-mail, seu nome, o link da sua foto de perfil e um ID de usuário atribuído pelo Firebase. Com a Apple, apenas seu endereço de e-mail (que pode ser um endereço de retransmissão privado, se você escolheu Ocultar Meu E-mail) e um ID de usuário; a Apple não compartilha seu nome nem sua foto com o Aplicativo.</li><li>Suas partidas terminadas: os nomes das duplas e dos jogadores como você os digitou, os pontos marcados em cada rodada, as regras da mesa usadas, as pontuações, a meta e quando cada partida começou e terminou.</li><li>Informações técnicas: a plataforma (Android ou iPhone) e a versão do app, e a data em que a conta foi criada.</li></ul>
+<p>Esses dados são armazenados no Google Firebase (Authentication e Cloud Firestore), em servidores do Google Cloud nos Estados Unidos. O Google os processa em nome do Prestador de Serviços. Eles são criptografados em trânsito e em repouso, e as regras de segurança permitem que apenas a sua própria conta leia ou altere as suas partidas. O Prestador de Serviços não vende esses dados nem os usa para publicidade.</p>
+<p>Para proteger o serviço contra uso indevido, o Aplicativo no Android usa o Firebase App Check com o Google Play Integrity, que verifica se as solicitações vêm do Aplicativo original em um dispositivo autêntico.</p>
+<p>Se você sair da conta, suas partidas continuam no seu dispositivo e na nuvem, mas deixam de ter backup. Se você perder o Tantos Pro, a sincronização para, e seus dados na nuvem são mantidos até que você os exclua.</p>
+<p>Exclusão da sua conta e dos dados na nuvem: no Aplicativo, no Android ou no iPhone, acesse Configurações › Backup na nuvem › Apagar dados da nuvem. Sua conta e todas as suas partidas na nuvem são excluídas imediatamente; as partidas no seu dispositivo são mantidas. Se você entrou com a Apple, o Tantos também revoga o próprio acesso à sua Conta Apple. Você também pode solicitar a exclusão sem o Aplicativo em <a href="https://app-tantos-android.web.app/delete-account">https://app-tantos-android.web.app/delete-account</a> ou por e-mail para <a href="mailto:soporte.tantosapp+eliminar@gmail.com">soporte.tantosapp+eliminar@gmail.com</a>. As solicitações por e-mail são concluídas em até 30 dias.</p>
+<p>Dados no seu dispositivo: o backup do próprio celular pode incluir seus jogos. No Android, o backup automático os copia para a sua própria Conta do Google; no iPhone, o Backup do iCloud ou um backup no seu computador pode incluí-los. Esses backups são gerenciados pelo Google ou pela Apple, e você pode desativá-los nas configurações do seu dispositivo.</p>
+<h2>Acesso de terceiros</h2>
+<p>O Aplicativo usa os seguintes serviços de terceiros, que processam dados em nome do Prestador de Serviços:</p>
+<ul><li>Google Firebase Analytics, para entender como o Aplicativo é usado, e, no Android, também o Firebase Crashlytics, para corrigir falhas. Eles recebem eventos de uso, informações do dispositivo e identificadores de instância do app.</li><li>Google AdMob, para exibir anúncios na versão gratuita. No Android, ele pode usar o ID de publicidade do seu dispositivo. No iPhone, o Aplicativo não pede permissão para rastrear você, por isso o identificador de publicidade da Apple (IDFA) não fica disponível para ele. Onde for exigido (por exemplo, no EEE e no Reino Unido), o Aplicativo pede o seu consentimento antes, e você pode mudar a sua escolha a qualquer momento em Configurações › Opções de privacidade.</li><li>Google Play Billing, no Android, ou a App Store, no iPhone, para processar a compra do Tantos Pro. O Prestador de Serviços não recebe seus dados de pagamento.</li><li>Google Firebase Authentication, Cloud Firestore e App Check, apenas se você ativar o Backup na nuvem (veja acima).</li></ul>
+<p>O Prestador de Serviços pode compartilhar suas informações com terceiros das formas descritas nesta declaração de privacidade.</p>
+<p>O Prestador de Serviços pode divulgar as Informações Fornecidas pelo Usuário e as Informações Coletadas Automaticamente:</p>
+<ul><li>conforme exigido por lei, por exemplo, para cumprir uma intimação ou processo legal semelhante;</li><li>quando acreditar, de boa-fé, que a divulgação é necessária para proteger os próprios direitos, proteger a sua segurança ou a de outras pessoas, investigar fraudes ou responder a uma solicitação do governo;</li><li>com prestadores de serviços de confiança que trabalham em nome dele, não fazem uso independente das informações que divulgamos a eles e concordaram em cumprir as regras estabelecidas nesta declaração de privacidade.</li></ul>
+<h2>Direito de recusa</h2>
+<p>Você pode interromper toda a coleta de informações pelo Aplicativo desinstalando-o. Você pode usar os processos padrão de desinstalação disponíveis no seu dispositivo móvel ou por meio da loja ou rede de aplicativos móveis. Desinstalar não apaga os dados armazenados no Backup na nuvem: para apagá-los, use Configurações › Backup na nuvem › Apagar dados da nuvem no Aplicativo ou acesse <a href="https://app-tantos-android.web.app/delete-account">https://app-tantos-android.web.app/delete-account</a>.</p>
+<h2>Política de retenção de dados</h2>
+<p>O Prestador de Serviços manterá os Dados Fornecidos pelo Usuário enquanto você usar o Aplicativo e por um período razoável depois disso. Os dados armazenados no Backup na nuvem são mantidos até que você os exclua, conforme descrito na seção Backup na nuvem. Se você quiser que o Prestador de Serviços exclua os Dados Fornecidos pelo Usuário que você forneceu por meio do Aplicativo, entre em contato pelo e-mail <a href="mailto:soporte.tantosapp+eliminar@gmail.com">soporte.tantosapp+eliminar@gmail.com</a>, e ele responderá em um prazo razoável.</p>
+<h2>Crianças</h2>
+<p>O Prestador de Serviços não usa o Aplicativo para, intencionalmente, solicitar dados de crianças menores de 13 anos ou direcionar marketing a elas.</p>
+<p>O Prestador de Serviços não coleta intencionalmente informações de identificação pessoal de crianças. O Prestador de Serviços incentiva todas as crianças a nunca enviarem informações de identificação pessoal por meio do Aplicativo e/ou dos Serviços. O Prestador de Serviços incentiva pais e responsáveis legais a acompanharem o uso da internet pelos filhos e a ajudarem a fazer cumprir esta Política, orientando os filhos a nunca fornecerem informações de identificação pessoal por meio do Aplicativo e/ou dos Serviços sem a permissão deles. Se você tiver motivos para acreditar que uma criança forneceu informações de identificação pessoal ao Prestador de Serviços por meio do Aplicativo e/ou dos Serviços, entre em contato com o Prestador de Serviços (<a href="mailto:soporte.tantosapp@gmail.com">soporte.tantosapp@gmail.com</a>) para que ele possa tomar as medidas necessárias. Você também precisa ter pelo menos 16 anos para consentir com o tratamento das suas informações de identificação pessoal no seu país (em alguns países, podemos permitir que seus pais ou responsável legal façam isso em seu nome).</p>
+<h2>Segurança</h2>
+<p>O Prestador de Serviços se preocupa em proteger a confidencialidade das suas informações. O Prestador de Serviços adota salvaguardas físicas, eletrônicas e procedimentais para proteger as informações que processa e mantém.</p>
+<h2>Feedback e a pesquisa por país</h2>
+<p>O Tantos tem formulários opcionais para relatar um problema, sugerir um recurso, me contar que o app não é para você e dizer como se joga dominó onde você mora. Quando você envia um deles, eu recebo o que você escreveu e as opções que marcou, o seu país, a versão e o idioma do app e se você usa Android ou iPhone. Um relato de problema também inclui o modelo do seu celular e a versão do sistema operacional, para que eu consiga encontrar o bug. Se você deixar o seu e-mail, eu o uso apenas para responder a você.</p>
+<p>Essas respostas são armazenadas no Google Firebase (Cloud Firestore). Elas não são vinculadas ao seu nome, à sua conta nem a nenhum ID de dispositivo ou de publicidade, e eu não as vendo nem as compartilho. Eu as guardo enquanto elas me ajudarem a melhorar o Tantos.</p>
+<p>Para que o seu feedback seja apagado, escreva para <a href="mailto:soporte.tantosapp@gmail.com">soporte.tantosapp@gmail.com</a>. Se você deixou o seu e-mail no formulário, consigo encontrar e apagar tudo o que você enviou com ele.</p>
+<h2>Alterações</h2>
+<p>Esta Política de Privacidade pode ser atualizada periodicamente, por qualquer motivo. O Prestador de Serviços avisará sobre quaisquer alterações na Política de Privacidade atualizando esta página com a nova Política de Privacidade. Recomenda-se que você consulte esta Política de Privacidade regularmente para verificar eventuais alterações, pois o uso contínuo será considerado aprovação de todas as alterações.</p>
+<p>Esta política de privacidade entra em vigor em 19 de novembro de 2026.</p>
+<h2>Seu consentimento</h2>
+<p>Ao usar o Aplicativo, você consente com o tratamento das suas informações conforme estabelecido nesta Política de Privacidade, agora e conforme alterada por nós.</p>
+<h2>Fale conosco</h2>
+<p>Se você tiver dúvidas sobre privacidade ao usar o Aplicativo ou sobre estas práticas, entre em contato com o Prestador de Serviços pelo e-mail <a href="mailto:soporte.tantosapp@gmail.com">soporte.tantosapp@gmail.com</a>.</p>
+  </article>
+  <nav class="more">
+    <a href="/pt/terms/">Termos de uso</a>
+    <a href="/?lang=en">Voltar ao início</a>
+  </nav>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="/?lang=en#soporte">Suporte</a>
+    <span class="legal">Feito na República Dominicana. © 2026 Levi Nunez Marte</span>
+  </div>
+</footer>
+
+<script>
+  // The language menu closes on a tap anywhere else, as a menu does.
+  document.addEventListener("click", function (e) {
+    var menu = document.querySelector(".langs");
+    if (menu && menu.open && !menu.contains(e.target)) menu.open = false;
+  });
+</script>
+
+</body>
+</html>
